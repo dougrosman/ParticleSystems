@@ -5,17 +5,17 @@ void ofApp::setup()
 {
     ofBackground(0);
     
-    size = 20;
+    size = 3000;
     for(int i = 0; i < size; i++)
     {
         Particle p;
         
         p.position = {ofGetWidth()/2, ofGetHeight()/2, 0};
-        p.velocity = {ofRandom(-10, 10), ofRandom(-10, -6), 0};
+        p.velocity = {ofRandom(-10, 10), ofRandom(10, 20), 0};
         p.acceleration.y = 0.1;
         p.acceleration.x = ofRandom(-.1, .1);
         
-        p.radius = ofRandom(2, 5);
+        p.radius = ofRandom(1, 5);
         p.color = ofColor(255, ofRandom(50, 220));
         particles.push_back(p);
     }
@@ -51,22 +51,24 @@ void ofApp::draw()
 {
     for(int i = 0; i < particles.size(); i++)
     {
-        ofSetColor(particles[i].color);
+        //ofSetColor(particles[i].color);
         
+        float hue = ofMap(particles[i].position.y, -5, 1800, 0, 255);
+        ofSetColor(ofColor::fromHsb(hue, 255, 255));
         ofPushMatrix();
         //ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
         ofDrawCircle(particles[i].position.x, particles[i].position.y, particles[i].radius);
         
-        float t = ofGetElapsedTimef();
-        //ofSetColor(255, ofMap(sin(t), -1, 1, 10, 60));
-        ofSetLineWidth(2);
-        if(i+1 >= particles.size())
-        {
-            ofDrawLine(particles[i].position, particles[0].position);
-        }
-        else{
-            ofDrawLine(particles[i].position, particles[i+1].position);
-        }
+//        float t = ofGetElapsedTimef();
+//        //ofSetColor(255, ofMap(sin(t), -1, 1, 10, 60));
+//        ofSetLineWidth(2);
+//        if(i+1 >= particles.size())
+//        {
+//            ofDrawLine(particles[i].position, particles[0].position);
+//        }
+//        else{
+//            ofDrawLine(particles[i].position, particles[i+1].position);
+//        }
         ofPopMatrix();
         
         //ofDrawBitmapString(ofToString(ofGetFrameRate()), 5, 10);
